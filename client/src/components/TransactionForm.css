@@ -1,35 +1,55 @@
 .transaction-form {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.transaction-form h3 {
+    margin-top: 0;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-size: 1.2rem;
 }
 
 .form-row {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.form-row input, .form-row select {
+.transaction-form input, .transaction-form select {
     flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.transaction-form input:focus, .transaction-form select:focus {
+    border-color: #6366f1;
 }
 
 .add-btn {
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 14px;
+    background: linear-gradient(135deg, #10b981, #059669);
     color: white;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
     cursor: pointer;
+    transition: transform 0.2s;
 }
 
 .add-btn:hover {
-    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }

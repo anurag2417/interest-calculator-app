@@ -1,51 +1,162 @@
 .dashboard-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    max-width: 1000px;
-    margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(to right, #60a5fa, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+/* Glassmorphism Cards */
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
-.card {
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-align: center;
+.stat-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  transition: transform 0.2s ease;
 }
 
-.card h3 { margin: 0 0 10px 0; font-size: 1rem; color: #666; }
-.card p { margin: 0; font-size: 1.5rem; font-weight: bold; }
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,0.2);
+}
 
-.given { background-color: #d4edda; color: #155724; }
-.taken { background-color: #f8d7da; color: #721c24; }
-.balance { background-color: #e2e3e5; color: #383d41; }
+.stat-card h3 {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.stat-card .amount {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.amount.green { color: var(--accent-green); text-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
+.amount.red { color: var(--accent-red); text-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
+.amount.blue { color: var(--text-primary); }
+
+/* Search & Actions */
+.controls-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  background: var(--bg-card);
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  outline: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+/* Modern Table */
+.table-container {
+  background: var(--bg-card);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+}
 
 .transaction-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.transaction-table th, .transaction-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+.transaction-table th {
+  background: #0f172a;
+  color: var(--text-secondary);
+  text-align: left;
+  padding: 15px 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
 }
 
-.text-green { color: green; font-weight: bold; }
-.text-red { color: red; font-weight: bold; }
+.transaction-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  color: var(--text-primary);
+}
 
-.delete-btn {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
+.transaction-table tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.badge-overdue { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+.badge-paid { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+
+.action-btn {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: white;
+  color: black;
+}
+
+.delete-btn:hover {
+  background: var(--accent-red);
+  color: white;
+  border-color: var(--accent-red);
 }
