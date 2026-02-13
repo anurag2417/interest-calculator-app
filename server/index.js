@@ -10,7 +10,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/transactions', require('./routes/transactions'));
+const transactionRoutes = require('./routes/transactions');
+app.use('/api/transactions', transactionRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/interest_calculator';
