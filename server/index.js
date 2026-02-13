@@ -1,6 +1,5 @@
 // server/index.js
-
-require('dotenv').config(); // Load .env file
+require('dotenv').config(); 
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -10,32 +9,25 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to Cloud DB (or local if cloud fails)
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/interest_calculator';
-
-mongoose.connect(MONGO_URI)
-    .then(() => console.log('✅ MongoDB Connected!'))
-    .catch(err => console.error('❌ Connection Error:', err));
-
-
-
-// 2. Define Routes (We will create this file next)
+// 1. Define Routes
 const transactionRoutes = require('./routes/transactions');
 app.use('/api/transactions', transactionRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-// 1. Better Connection Logic
+// 2. Database Connection Logic (Only ONE block is needed)
 const connectDB = async () => {
     try {
-        // Check if we are already connected
+        // Check if we are already connected to avoid errors
         if (mongoose.connection.readyState === 1) {
             console.log('✅ MongoDB Already Connected!');
             return;
         }
 
-        // If not connected, connect now
-        await mongoose.connect(process.env.MONGO_URI); // Make sure your .env variable is correct
+        // Use the Environment Variable for Cloud, or Local as backup
+        const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/interest_calculator';
+
+        await mongoose.connect(MONGO_URI);
         console.log('✅ MongoDB Connected Successfully!');
     } catch (err) {
         console.error('❌ Connection Error:', err);
@@ -43,9 +35,8 @@ const connectDB = async () => {
     }
 };
 
-// Call the function
-connectDB();
-
+// Start the Server (and connect to DB)
 app.listen(PORT, () => {
+    connectDB(); // Call connection logic when server starts
     console.log(`Server running on port ${PORT}`);
 });
