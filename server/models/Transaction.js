@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const TransactionSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
+    },
     type: {
         type: String,
         enum: ['Given', 'Taken'], // "Given" = you lent money, "Taken" = you borrowed
@@ -31,7 +36,13 @@ const TransactionSchema = new mongoose.Schema({
         type: String,
         enum: ['Active', 'Settled'],
         default: 'Active'
-    }
+    },
+    amount: { type: Number, required: true },
+    interestRate: { type: Number, required: true },
+    personName: { type: String, required: true },
+    date: { type: Date, default: Date.now },
+    dueDate: { type: Date },
+    status: { type: String, enum: ['Active', 'Settled'], default: 'Active' }
 });
 
 module.exports = mongoose.model('Transaction', TransactionSchema);

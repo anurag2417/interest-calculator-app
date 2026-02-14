@@ -1,14 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const Transaction = require('../models/Transaction'); // Import the schema we made earlier
+const auth = require('../middleware/auth'); // Import Middleware
+const Transaction = require('../models/Transaction');
+
+// @route   GET /api/transactions
+// @desc    Get ALL transactions for the LOGGED-IN user
+router.get('/', auth, async (req, res) => {
+    try {
+        // Find transactions where user matches the ID in the token
+        const transactions = await Transaction.find({ user: req.user.id }).sort({ date: -1 });
+        res.json(transactions);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 // @route   POST /api/transactions
-// @desc    Add a new transaction (Given or Taken)
-router.post('/', async (req, res) => {
+// @desc    Add a new transaction
+router.post('/', auth, async (req, res) => {
     try {
         const { type, amount, interestRate, personName, date, dueDate } = req.body;
 
         const newTransaction = new Transaction({
+            user: req.user.id, // Attach the logged-in user's ID
             type,
             amount,
             interestRate,
@@ -17,49 +32,52 @@ router.post('/', async (req, res) => {
             dueDate
         });
 
-        const savedTransaction = await newTransaction.save();
-        res.json(savedTransaction);
+        const transaction = await newTransaction.save();
+        res.json(transaction);
     } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// @route   GET /api/transactions
-// @desc    Get all transactions (For the Dashboard)
-router.get('/', async (req, res) => {
-    try {
-        const transactions = await Transaction.find().sort({ date: -1 }); // Sort by newest first
-        res.json(transactions);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
 });
 
 // @route   DELETE /api/transactions/:id
-// @desc    Delete a transaction
-router.delete('/:id', async (req, res) => {
+// @desc    Delete transaction
+router.delete('/:id', auth, async (req, res) => {
     try {
+        let transaction = await Transaction.findById(req.params.id);
+        if (!transaction) return res.status(404).json({ msg: 'Transaction not found' });
+
+        // Make sure user owns the transaction
+        if (transaction.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Not authorized' });
+        }
+
         await Transaction.findByIdAndDelete(req.params.id);
-        res.json({ success: true });
+        res.json({ msg: 'Transaction removed' });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
 });
 
 // @route   PATCH /api/transactions/:id/settle
-// @desc    Mark a transaction as "Settled" (Paid)
-router.patch('/:id/settle', async (req, res) => {
+// @desc    Update Status
+router.patch('/:id/settle', auth, async (req, res) => {
     try {
-        const transaction = await Transaction.findById(req.params.id);
-        if (!transaction) return res.status(404).json({ msg: 'Transaction not found' });
+        let transaction = await Transaction.findById(req.params.id);
+        if (!transaction) return res.status(404).json({ msg: 'Not found' });
 
-        // Toggle the status (if Active -> Settled, if Settled -> Active)
+        // Check ownership
+        if (transaction.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Not authorized' });
+        }
+
         transaction.status = transaction.status === 'Active' ? 'Settled' : 'Active';
-        
         await transaction.save();
         res.json(transaction);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
 });
 
