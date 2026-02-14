@@ -1,104 +1,143 @@
-/* --- DASHBOARD WRAPPER (Edge-to-Edge) --- */
+/* --- DASHBOARD WRAPPER --- */
 .dashboard-wrapper {
-  display: flex;
-  gap: 20px;
-  width: 100%;
-  min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-x: hidden;
+    display: flex;
+    gap: 25px;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: flex-start; /* Required for sticky profile card */
+    background-color: #0f172a;
 }
 
-/* --- LEFT SIDEBAR (Fixed Width) --- */
+/* --- LEFT SIDEBAR (The Fixed/Sticky Container) --- */
 .profile-sidebar {
-  flex: 0 0 280px; /* Fixed width, never shrinks */
-  position: sticky;
-  top: 20px;
-  height: fit-content;
-  z-index: 10;
+    flex: 0 0 280px;
+    position: sticky; /* Keep card on display */
+    top: 20px;
+    height: calc(100vh - 40px);
+    z-index: 100;
 }
 
+/* --- THE PROFILE CARD --- */
 .profile-card {
-  background: var(--bg-card);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 30px 20px;
-  text-align: center;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 35px 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Keeps logout at the bottom */
 }
 
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Avatar Styling */
 .profile-avatar {
   width: 90px;
   height: 90px;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  background: linear-gradient(135deg, #8b5cf6, #d946ef);
   border-radius: 50%;
   margin: 0 auto 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.2rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: white;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  border: 4px solid #1e293b;
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+  flex-shrink: 0;
 }
 
 .profile-name {
-  font-size: 1.4rem;
-  color: white;
-  margin: 0 0 5px 0;
+  font-size: 1.5rem;
+  color: #f8fafc;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
+
 .profile-email {
-  color: var(--text-secondary);
+  color: #94a3b8;
   font-size: 0.85rem;
-  margin-bottom: 20px;
+  margin: 5px 0 15px 0;
   word-break: break-all;
 }
+
+.profile-badge {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
 .sidebar-divider {
   height: 1px;
-  background: var(--glass-border);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   margin: 20px 0;
 }
+
 .sidebar-stat {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-.sidebar-stat span:last-child {
-  color: white;
-  font-weight: 600;
+  font-size: 0.95rem;
+  color: #cbd5e1;
 }
 
+.sidebar-stat span:last-child {
+  color: white;
+  font-weight: 700;
+}
+
+/* Logout Button */
 .logout-btn-sidebar {
   width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background: rgba(239, 68, 68, 0.1);
+  padding: 14px;
+  background: transparent;
   color: #ef4444;
-  border: 1px solid #ef4444;
-  border-radius: 10px;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
+
 .logout-btn-sidebar:hover {
   background: #ef4444;
   color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+  transform: translateY(-2px);
 }
 
-/* --- RIGHT MAIN CONTENT (Fills Remaining Space) --- */
+/* --- MAIN CONTENT (Dashboard Overview) --- */
 .main-content {
-  flex: 1; /* Takes all remaining space */
-  width: 0; /* Prevents overflow issues */
+  flex: 1;
+  width: 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
 }
 
-/* Stats Grid */
+/* Stats Cards Grid (Top) */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -109,14 +148,15 @@
 .stat-card {
   background: rgba(30, 41, 59, 0.7);
   backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 25px 20px;
   border-radius: 16px;
   text-align: center;
 }
+
 .stat-card h3 {
-  color: var(--text-secondary);
-  font-size: 0.85rem;
+  color: #94a3b8;
+  font-size: 0.8rem;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
@@ -126,16 +166,16 @@
   margin: 0;
 }
 .amount.green {
-  color: var(--accent-green);
+  color: #10b981;
 }
 .amount.red {
-  color: var(--accent-red);
+  color: #ef4444;
 }
 .amount.blue {
-  color: var(--accent-blue);
+  color: #3b82f6;
 }
 
-/* --- SPLIT ROW: Form & Chart --- */
+/* Form (Middle) and Chart (Right) Split Row */
 .dashboard-split-row {
   display: flex;
   gap: 20px;
@@ -144,39 +184,41 @@
 }
 
 .dashboard-form-section {
-  flex: 2; /* 66% width */
+  flex: 2;
 }
 
 .dashboard-chart-section {
-  flex: 1; /* 33% width */
-  background: var(--bg-card);
-  border: 1px solid var(--glass-border);
+  flex: 1;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 10px;
+  padding: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* --- TABLE & CONTROLS --- */
+/* Controls & Search */
 .controls-container {
   display: flex;
   gap: 15px;
   margin-bottom: 20px;
-  background: var(--bg-card);
-  padding: 10px;
+  background: #1e293b;
+  padding: 12px;
   border-radius: 12px;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .search-input {
   flex: 1;
   background: transparent;
   border: none;
   color: white;
   font-size: 1rem;
-  padding: 10px;
+  padding: 8px;
   outline: none;
 }
+
 .btn-primary {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
@@ -185,32 +227,34 @@
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  white-space: nowrap;
 }
 
+/* Table Container */
 .table-container {
-  background: var(--bg-card);
+  background: #1e293b;
   border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .transaction-table {
   width: 100%;
   border-collapse: collapse;
 }
 .transaction-table th {
   background: #0f172a;
-  color: var(--text-secondary);
+  color: #94a3b8;
   text-align: left;
-  padding: 15px;
+  padding: 15px 20px;
   font-size: 0.85rem;
   text-transform: uppercase;
 }
 .transaction-table td {
-  padding: 15px;
-  border-bottom: 1px solid var(--glass-border);
-  color: var(--text-primary);
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
 }
+
 .badge {
   padding: 4px 8px;
   border-radius: 6px;
@@ -219,24 +263,26 @@
 }
 .badge-paid {
   background: rgba(16, 185, 129, 0.2);
-  color: var(--accent-green);
+  color: #10b981;
 }
+
 .action-btn {
   background: transparent;
-  border: 1px solid var(--glass-border);
-  color: var(--text-secondary);
-  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
   margin-right: 5px;
 }
+
 .delete-btn:hover {
-  background: var(--accent-red);
+  background: #ef4444;
   color: white;
-  border-color: var(--accent-red);
+  border-color: #ef4444;
 }
 
-/* --- RESPONSIVE --- */
+/* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 1200px) {
   .dashboard-split-row {
     flex-direction: column;
@@ -249,10 +295,13 @@
 @media (max-width: 900px) {
   .dashboard-wrapper {
     flex-direction: column;
+    align-items: stretch;
   }
   .profile-sidebar {
-    width: 100%;
     position: relative;
     top: 0;
+    height: auto;
+    width: 100%;
+    margin-bottom: 20px;
   }
 }
