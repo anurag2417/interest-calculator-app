@@ -86,8 +86,8 @@ cd financeflow
 ---
 
 ## Start Frontend
-- cd client
-- npm run dev
+cd client
+npm run dev
 
 ---
 
@@ -105,7 +105,7 @@ cd financeflow
 
 ## 👨‍💻 Author
 
-# - Anurag Kumar
+# Anurag Kumar
 - Scaler School of Technology
 - Bengaluru
 - India
