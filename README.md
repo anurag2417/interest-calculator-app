@@ -55,21 +55,21 @@ cd financeflow
 
 ---
 
-Install Backend
+## Install Backend
 
 - cd server
 - npm install
 
 ---
 
-Install Frontend
+## Install Frontend
 
 - cd ../client
 - npm install
 
 ---
 
-🔑 Environment Setup
+## 🔑 Environment Setup
 
 - Create .env inside /server:
 
@@ -78,20 +78,20 @@ Install Frontend
 
 ---
 
-▶️ Run Application
+## ▶️ Run Application
 - Start Backend
 - cd server
 - npm run dev
 
 ---
 
-Start Frontend
+## Start Frontend
 - cd client
 - npm run dev
 
 ---
 
-📌 Features Overview
+## 📌 Features Overview
 
 - FinanceFlow enables users to:
 - Track lending and borrowing records
@@ -103,9 +103,9 @@ Start Frontend
 
 ---
 
-👨‍💻 Author
+# 👨‍💻 Author
 
-- Anurag Kumar
-- Scaler School of Technology
-- Bengaluru
-- India
+# - Anurag Kumar
+## - Scaler School of Technology
+## - Bengaluru
+## - India
