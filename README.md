@@ -49,7 +49,7 @@ It provides a clean dashboard, automated debt tracking, and real-time financial 
 
 Clone repository:
 
-```bash
+
 git clone https://github.com/AnuragKumar/financeflow.git
 cd financeflow
 
@@ -76,6 +76,7 @@ npm run dev
 Start Frontend
 cd client
 npm run dev
+
 
 👨‍💻 Author
 
