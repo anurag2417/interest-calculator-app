@@ -15,6 +15,13 @@ app.use('/api/transactions', transactionRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/interest_calculator';
+// ... existing routes ...
+app.use('/api/transactions', require('./routes/transactions'));
+
+// NEW: Auth Routes
+app.use('/api/auth', require('./routes/auth')); 
+
+// ... existing connection logic ...
 
 // --- DATABASE CONNECTION LOGIC ---
 // We connect ONLY once here.
