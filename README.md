@@ -91,6 +91,18 @@ Start Frontend
 
 ---
 
+📌 Features Overview
+
+- FinanceFlow enables users to:
+- Track lending and borrowing records
+- Automatically compute interest
+- View financial analytics
+- Manage transactions efficiently
+- Maintain isolated data per account
+- Receive smooth UI feedback and notifications
+
+---
+
 👨‍💻 Author
 
 - Anurag Kumar
