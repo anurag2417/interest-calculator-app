@@ -45,9 +45,14 @@ const TransactionForm = ({ onTransactionAdded }) => {
       // Refresh the dashboard list
       onTransactionAdded();
     } catch (err) {
-      console.error(err);
-      // 4. Error Toast
-      toast.error("Failed to add transaction. Try again.");
+      if (err.response && err.response.data.errors) {
+        // Loop through Zod errors and show them in toasts
+        err.response.data.errors.forEach((error) => {
+          toast.error(`${error.field}: ${error.message}`);
+        });
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }

@@ -1,7 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const { z } = require('zod');
+const validate = require('../middleware/validate');
 const auth = require('../middleware/auth'); // Import Middleware
 const Transaction = require('../models/Transaction');
+
+// 1. Define the Transaction Schema
+const transactionSchema = z.object({
+    personName: z.string().min(2, "Name must be at least 2 characters"),
+    type: z.enum(["Given", "Taken"]),
+    amount: z.number().positive("Amount must be a positive number"),
+    interestRate: z.number().min(0).max(100),
+    date: z.string().datetime({ offset: true }).or(z.string()), // Flexible date validation
+    dueDate: z.string().optional().nullable()
+});
 
 // @route   GET /api/transactions
 // @desc    Get ALL transactions for the LOGGED-IN user
@@ -18,7 +30,7 @@ router.get('/', auth, async (req, res) => {
 
 // @route   POST /api/transactions
 // @desc    Add a new transaction
-router.post('/', auth, async (req, res) => {
+router.post('/', [auth, validate(transactionSchema)], async (req, res) => {
     try {
         const { type, amount, interestRate, personName, date, dueDate } = req.body;
 

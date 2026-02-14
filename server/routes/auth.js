@@ -4,8 +4,16 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth"); // Import Middleware
 const User = require("../models/User");
+const { z } = require('zod');
+const validate = require('../middleware/validate');
 
 const JWT_SECRET = "mysecretkey123";
+
+const registerSchema = z.object({
+    name: z.string().min(2),
+    email: z.string().email("Invalid email format"),
+    password: z.string().min(6, "Password must be at least 6 characters")
+});
 
 // 1. NEW ROUTE: Get Logged In User Details
 // @route   GET /api/auth/user
@@ -21,7 +29,7 @@ router.get("/user", auth, async (req, res) => {
 });
 
 // 2. Register Route (Keep this as is)
-router.post("/register", async (req, res) => {
+router.post('/register', validate(registerSchema), async (req, res) => {
   try {
     const { name, email, password } = req.body;
     let user = await User.findOne({ email });
