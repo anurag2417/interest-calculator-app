@@ -53,32 +53,47 @@ Clone repository:
 git clone https://github.com/AnuragKumar/financeflow.git
 cd financeflow
 
+---
+
 Install Backend
-cd server
-npm install
+
+- cd server
+- npm install
+
+---
 
 Install Frontend
-cd ../client
-npm install
+
+- cd ../client
+- npm install
+
+---
 
 🔑 Environment Setup
 
-Create .env inside /server:
+- Create .env inside /server:
 
-MONGO_URI=your_mongodb_connection
-JWT_SECRET=your_secret_key
+- MONGO_URI=your_mongodb_connection
+- JWT_SECRET=your_secret_key
+
+---
 
 ▶️ Run Application
-Start Backend
-cd server
-npm run dev
+- Start Backend
+- cd server
+- npm run dev
+
+---
 
 Start Frontend
-cd client
-npm run dev
+- cd client
+- npm run dev
 
+---
 
 👨‍💻 Author
 
-Anurag Kumar
-Scaler School of Technology, Bengaluru, India
+- Anurag Kumar
+- Scaler School of Technology
+- Bengaluru
+- India
