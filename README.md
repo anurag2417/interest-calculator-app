@@ -103,9 +103,9 @@ cd financeflow
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 # - Anurag Kumar
-## - Scaler School of Technology
-## - Bengaluru
-## - India
+- Scaler School of Technology
+- Bengaluru
+- India
